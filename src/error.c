@@ -1,23 +1,3 @@
-/*
-** ERROR INDEX
-**
-** -10	=	NO CUB FILE
-** -11 =	INVALID MAP
-** -12 =	WRONG NUMBER/ORDER OF ARGUMENTS * NO ARGUMENTS * ARGUMENT ERROR
-** -13 =	MLX ERROR
-** -14 =	BITMAP ERROR
-** -15 =	CANT OPEN FILE
-** -16 =	MAP NOT CLOSED
-** -17 =	MAP NOT FOUND
-** -18 =	WRONG TYPE OF PARAMS
-** -19 =	NO PLAYER POSITION
-** -20 =	WRONG RESOLUTION
-** -21 =	TEXTURE PATH NOT FOUND
-** -22 =	SPRITE PATH NOT FOUND
-** -23 =	EXPECTED A ".xpm" FILE
-** -24 =	WRONG COLOR ARGUMENTS
-*/
-
 #include "../includes/cub3d.h"
 
 static void	print_error_1(int err)
@@ -52,7 +32,7 @@ static void	print_error_2(int err)
 		ft_putendl("R: 720 480 (positive integers).\n\n");
 	}
 	if (err == -21)
-		ft_putendl("Error\nTexture path not found.\n\n");//PATH NOT FOUND
+		ft_putendl("Error\nTexture path not found.\n\n");
 	if (err == -22)
 		ft_putendl("Error\nSprite path not found.\n\n");
 	if (err == -23)

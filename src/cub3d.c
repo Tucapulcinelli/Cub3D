@@ -98,7 +98,6 @@ int	main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	game.data.mlx = mlx_init();
 	check_file(argc, argv, &game);
-	//if (game.file.map_row != 0)
 	set_param(&game);
 	if (game.init == 0)
 	game.data.win = mlx_new_window(game.data.mlx,

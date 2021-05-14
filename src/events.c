@@ -2,8 +2,6 @@
 
 int	close_window(t_game *game)
 {
-	//t_bmp bmp;
-
 	free(game->ray.dist_wall);
 	free(game->sprite);
 	mlx_destroy_window(game->data.mlx, game->data.win);
