@@ -59,6 +59,7 @@ void	get_texture(char *line, char **texture)
 	if (open(*texture, O_RDONLY) == -1)
 	{
 		free(split);
+		free(*texture);
 		return_error(-21);
 	}
 	if (split[tex_count - 1] != 'm' || split[tex_count - 2] != 'p'

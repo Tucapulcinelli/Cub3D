@@ -62,7 +62,7 @@ void	image_put(t_game *game, t_bmp *bmp, int file)
 	int				col;
 
 	row = bmp->height - 1;
-	buffer = malloc(bmp->file_size);
+	buffer = ft_calloc(1, bmp->file_size);
 	while (row >= 0)
 	{
 		col = 0;

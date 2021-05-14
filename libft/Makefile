@@ -31,7 +31,9 @@ FILES = $(dir)/ft_atoi.c\
 		$(dir)/get_next_line.c\
 		$(dir)/ft_putendl.c\
 		$(dir)/ft_putchar.c\
-		$(dir)/ft_putstr.c
+		$(dir)/ft_putstr.c\
+		$(dir)/ft_calloc.c
+
 
 INCLUDES	= -I includes
 

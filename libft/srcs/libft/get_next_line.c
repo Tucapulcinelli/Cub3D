@@ -20,49 +20,205 @@
 #include <stdlib.h>
 #include <limits.h>
 
-static int	outputs(int n, char **buff, char **line)
+static char		*ft_find_nl(char **temp)
 {
-	char	*temp;
+	char		*stock_long;
+	char		*memory;
 
-	if (n < 0)
-		return (-1);
-	*line = ft_substr(*buff, 0, ft_strclen(*buff, '\n'));
-	if (!line)
-		return (-1);
-	if (ft_strchr(*buff, '\n'))
+	memory = NULL;
+	stock_long = ft_strdup_gnl((char*)temp);
+	if (ft_strchr_gnl(*temp, '\n'))
 	{
-		temp = ft_strdup(ft_strchr(*buff, '\n') + 1);
-		ft_strdel(&*buff);
-		*buff = temp;
-		return (1);
+		free(stock_long);
+		stock_long = NULL;
+		stock_long = ft_strsub_gnl(*temp, 0, (ft_strlen_gnl(*temp)\
+						- ft_strlen_gnl((char*)ft_strchr_gnl(*temp, '\n'))));
+		memory = ft_strdup_gnl(ft_strchr_gnl(*temp, '\n') + 1);
+		free(*temp);
+		*temp = NULL;
+		*temp = (char *)ft_strdup_gnl(stock_long);
 	}
-	ft_strdel(&*buff);
-	return (0);
+	free(stock_long);
+	return (memory);
 }
 
-int	get_next_line(int fd, char **line)
+char			*ft_join_free_gnl(char *s1, char *s2)
 {
-	static char	*buff_line[_SC_OPEN_MAX];
-	char		*new_line;
-	int			nbytes;
+	char		*tmp;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > RLIMIT_NOFILE || !line)
-		return (-1);
-	if (!(buff_line[fd]))
-		buff_line[fd] = ft_strdup("");
-	if (!buff_line[fd])
-		return (-1);
-	new_line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!new_line)
-		return (-1);
-	nbytes = read(fd, new_line, BUFFER_SIZE);
-	while (nbytes > 0)
+	tmp = ft_strdup_gnl(s1);
+	free(s1);
+	s1 = ft_strjoin_gnl(s2, tmp);
+	free(tmp);
+	free(s2);
+	s2 = NULL;
+	return (s1);
+}
+
+static int		ft_read(int fd, char **temp)
+{
+	char		buffer[BUFFER_SIZE + 1];
+	int			check;
+	int			ret;
+	char		*tmp;
+
+	ret = 1;
+	check = 1;
+	while ((ret > 0) && check == 1)
 	{
-		new_line[nbytes] = '\0';
-		buff_line[fd] = ft_strjoin_free(buff_line[fd], new_line);
-		if (ft_strchr(buff_line[fd], '\n'))
-			break ;
+		ret = read(fd, buffer, BUFFER_SIZE);
+		if (ret < 0)
+			return (-1);
+		buffer[ret] = '\0';
+		if (*temp)
+		{
+			tmp = ft_strdup_gnl(*temp);
+			free(*temp);
+			*temp = ft_strjoin_gnl(tmp, buffer);
+			free(tmp);
+		}
+		else
+			*temp = ft_strdup_gnl(buffer);
+		check = ((ft_strchr_gnl(buffer, '\n')) ? 0 : 1);
 	}
-	ft_strdel(&new_line);
-	return (outputs(nbytes, &buff_line[fd], line));
+	return (ret);
+}
+
+int				str_free(char *str, int i)
+{
+	free(str);
+	return (i);
+}
+
+int				get_next_line(const int fd, char **line)
+{
+	char		*temp;
+	static char	*memor;
+	int			ret;
+
+	temp = ft_strdup_gnl("\0");
+	ret = ft_read(fd, &temp);
+	if (ret < 0 || fd < 0 || !(line) || BUFFER_SIZE <= 0)
+		return (str_free(temp, -1));
+	temp = (memor != NULL) ? ft_join_free_gnl(temp, memor) : temp;
+	memor = NULL;
+	if ((ret == 0 && !ft_strchr_gnl(temp, '\n') && !ft_strchr_gnl(memor, '\n')))
+	{
+		*line = ft_strdup_gnl(temp);
+		return (str_free(temp, 0));
+	}
+	if (ret >= 0)
+	{
+		memor = ft_find_nl(&temp);
+		*line = ft_strdup_gnl(temp);
+	}
+	return (str_free(temp, 1));
+}
+
+char					*ft_strsub_gnl(char *str, int start, int len)
+{
+	int					i;
+	char				*output;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (!(output = ft_calloc(1, sizeof(char) * (len + 1))))
+		return (NULL);
+	while (i < len && (str[start + i] != '\n'))
+	{
+		output[i] = str[start + i];
+		i++;
+	}
+	output[i] = '\0';
+	return (output);
+}
+
+size_t					ft_strlen_gnl(const char *s)
+{
+	int					i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+char					*ft_strchr_gnl(const char *s, int c)
+{
+	int					i;
+	char				*tmp;
+
+	i = 0;
+	tmp = (char *)s;
+	if (!s)
+		return (NULL);
+	if (c == '\0')
+	{
+		while (*tmp)
+			tmp++;
+		return ((char*)tmp);
+	}
+	while (tmp[i] != '\0')
+	{
+		if (tmp[i] == (char)c)
+			return ((char *)&tmp[i]);
+		i++;
+	}
+	if (*tmp == '\0' && c == '\0')
+	{
+		return (tmp);
+	}
+	return (NULL);
+}
+
+char					*ft_strdup_gnl(const char *s1)
+{
+	char				*output;
+	int					i;
+	int					size;
+
+	if (!s1)
+		return (NULL);
+	size = ft_strlen_gnl(s1);
+	if (!(output = ft_calloc(1, sizeof(char) * (size + 1))))
+		return (NULL);
+	i = 0;
+	while ((char)s1[i])
+	{
+		output[i] = s1[i];
+		i++;
+	}
+	output[i] = '\0';
+	return (output);
+}
+
+char					*ft_strjoin_gnl(char const *s1, char const *s2)
+{
+	unsigned long		i;
+	char				*output;
+	unsigned long		size1;
+	unsigned long		size2;
+
+	if (!(s1 && s2))
+		return (NULL);
+	size1 = ft_strlen_gnl(s1);
+	size2 = ft_strlen_gnl(s2);
+	if (!(output = ft_calloc(1, sizeof(char) * (size1 + size2 + 1))))
+		return (NULL);
+	i = 0;
+	while (i < size1)
+	{
+		output[i] = s1[i];
+		i++;
+	}
+	while (i < size1 + size2)
+	{
+		output[i] = s2[i - size1];
+		i++;
+	}
+	output[i] = '\0';
+	return (output);
 }

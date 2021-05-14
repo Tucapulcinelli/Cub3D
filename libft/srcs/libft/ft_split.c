@@ -63,7 +63,7 @@ static char	*p_split(char const *str, int *n, char c)
 		i++;
 	end = i;
 	*n = end;
-	split = (char *)malloc(end - start + 1);
+	split = (char *)ft_calloc(1, end - start + 1);
 	if (!(split))
 		return (NULL);
 	i = 0;
@@ -85,7 +85,7 @@ char	**ft_split(char const *s, char c)
 
 	if (s == NULL)
 		return (NULL);
-	split_t = (char **)malloc((1 + c_split(s, c)) * sizeof(char *));
+	split_t = (char **)ft_calloc(1, (1 + c_split(s, c)) * sizeof(char *));
 	if (split_t == NULL)
 		return (NULL);
 	i = 0;

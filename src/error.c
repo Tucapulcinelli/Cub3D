@@ -64,6 +64,34 @@ static void	print_error_2(int err)
 	}
 }
 
+// static void	free_paula(t_game *game)
+// {
+// 	int	i;
+
+// 	if (game->tex)
+// 	{
+// 		i = N_TEX;
+// 		while (i <= W_TEX)
+// 		{
+// 			if (game->tex[i].img)
+// 				mlx_destroy_image(game->data.mlx, game->tex[i].img);
+// 			i++;
+// 		}
+// 		free(game->tex);
+// 	}
+// 	// if (game->sprite)
+// 	// {
+// 	// 	i = 0;
+// 	// 	while (i < game->num_sprite)
+// 	// 	{
+// 	// 		if (game->sprite[i].texture.img.ptr)
+// 	// 			mlx_destroy_image(cub->mlx_ptr, sprites[i].texture.img.ptr);
+// 	// 		i++;
+// 	// 	}
+// 	// 	free(sprites);
+// 	// }
+// }
+
 void	return_error(int err/*, char *line*/)
 {
 	//t_game	game;
@@ -73,6 +101,9 @@ void	return_error(int err/*, char *line*/)
 		print_error_1(err);
 	else if (err <= -20 && err >= -24)
 		print_error_2(err);
+	//free_paula(&game.tex);
+	// if (game.file.no_path)
+	// 	mlx_destroy_image(game.data.mlx, game.file.no_path);
 	//free(&game.file);
 	//mlx_destroy_window(&game.data.mlx, &game.data.win);
 	//mlx_destroy_display(game.data.mlx);

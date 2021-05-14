@@ -12,7 +12,7 @@ char	*ft_strjoin_free(char *dest, char *src)
 	i = -1;
 	dest_len = ft_strlen(dest);
 	src_len = ft_strlen(src);
-	new_str = malloc((dest_len + src_len + 1) * sizeof(*new_str));
+	new_str = ft_calloc(1, (dest_len + src_len + 1) * sizeof(*new_str));
 	if (!new_str)
 	{
 		ft_strdel(&dest);

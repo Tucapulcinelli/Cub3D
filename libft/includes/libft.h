@@ -30,7 +30,7 @@ size_t		ft_strlen(const char *s);
 char		*ft_strstr(char *str, char *to_find);
 char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
-int			get_next_line(int fd, char **line);
+//int			get_next_line(int fd, char **line);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strlen_ptr(char **s);
 int			c_split(char const *str, char c);
@@ -39,5 +39,14 @@ size_t		ft_strlcpy(char *dest, const char *src, size_t destsize);
 void		ft_putendl(char *s);
 void		ft_putchar(char c);
 void		ft_putstr(char *s);
+char		*ft_join_free_gnl(char *s1, char *s2);
+int			str_free(char *str, int i);
+int			get_next_line(const int fd, char **line);
+char		*ft_strsub_gnl(char *str, int start, int len);
+size_t		ft_strlen_gnl(const char *s);
+char		*ft_strchr_gnl(const char *s, int c);
+char		*ft_strdup_gnl(const char *s1);
+char		*ft_strjoin_gnl(char const *s1, char const *s2);
+void 		*ft_calloc(size_t count, size_t size);
 
 #endif

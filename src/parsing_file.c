@@ -11,7 +11,7 @@ char	*full_line(t_game *game, char *line)
 	i = 0;
 	if (size_line < game->file.max_line)
 	{
-		line = (char *)malloc(sizeof(char) * (game->file.max_line + 1));
+		line = (char *)ft_calloc(1, sizeof(char) * (game->file.max_line + 1));
 		while (i < game->file.max_line)
 		{
 			if (i < (int)ft_strlen(tmp))
