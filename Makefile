@@ -79,7 +79,7 @@ $(OBJECTS): $(SRC_PATH) $(SRC)
 clean:
 	@make -C $(MLX_PATH) clean
 	@make -C $(LIBFT_PATH) clean
-	@rm -f $(OBJECTS) $(NAME)
+	@rm -f $(OBJECTS)
 
 fclean:
 	@rm -f $(NAME)
